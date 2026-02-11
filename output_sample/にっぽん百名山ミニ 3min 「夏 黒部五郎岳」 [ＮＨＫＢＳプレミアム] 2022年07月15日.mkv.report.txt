@@ -1,0 +1,47 @@
+===========================================================
+ [Quality Metrics]
+   SSIMULACRA2     :  75.920307
+   - Std Dev       :   6.336802
+   - Median        :  77.749062
+   - 5th %         :  62.787079
+   - 95th %        :  83.059769
+   - Min / Max     :  44.939381 /  87.286606
+   VMAF Score      :  97.126956 (default)
+   SSIM (All)      :   0.988069
+   PSNR (Avg)      :  44.799524
+
+ [Compression & Performance (main only)]
+   Size Ratio      : 39.21% (358.4 MB -> 140.5 MB)
+   Bit Rate        : 10251.21 kbps
+   Enc Speed       : 109.26 fps
+   Enc Time        : 0:01:00
+
+ [System Hardware & Encoder]
+   CPU             : Intel Core i7-9700T @ 2.00GHz [TB: 3.72GHz] (8C/8T)
+   GPU             : NVIDIA GeForce RTX 5050 (2560 cores, 2572 MHz)[PCIe3x16][581.80]
+   Encoder Spec    : NVEncC (x64) 9.10 (r3505) by rigaya, Jan 15 2026 11:50:03 (VC 1944/Win)
+
+ [Profile Settings]
+   Profile Name    : N-A-q30_デブロッキングNo-シャープ化No-時間軸安定化No-バンディング低減No
+   Encoder         : NVEnc
+   Parameters      : --qvbr 30 --codec av1 --bframes 7 --max-bitrate 60000 --preset quality --tune uhq --multipass 2pass-full --lookahead 32 --weightp --bref-mode each --output-depth 10
+   Filter          : フィルタを設定
+   CUDA Process    : Yes
+   DeInterlace     : Yes
+   - Method        : KFM
+   - SMDegrain NR  : No
+   - DecombUCF     : Yes
+   - Output FPS    : VFR
+   - Frame Timing  : 120fps
+   Deblock         : No (Strength: -, Quality: -, Sharpen: -)
+   Resize          : No
+   Time Stability  : No
+   Reduce Banding  : No
+   Edge Enhance    : No
+
+ [File Info]
+   Distorted       : にっぽん百名山ミニ 3min 「夏 黒部五郎岳」 [ＮＨＫＢＳプレミアム] 2022年07月15日.mkv
+   Reference       : にっぽん百名山ミニ 3min 「夏 黒部五郎岳」 [ＮＨＫＢＳプレミアム] 2022年07月15日.lossless.mkv
+
+ Report Date       : 2026/02/11 20:26:02
+===========================================================
