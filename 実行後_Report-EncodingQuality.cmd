@@ -30,7 +30,7 @@ call ".\Get-MediaInfo.cmd" "%%IN_PATH%%" "%%OUT_DIR%%"
 :: -SaveSsimu2Json : FFVshipのJSONをファイル出力する 
 :: -SaveReportJson : レポートのJSONをファイル出力する 
 :: -UniqueOutputName : 出力ファイル名にタイムスタンプを付与する 
-start "Encoding Quality Report" /MIN pwsh -NoProfile -ExecutionPolicy Bypass -File "!PS_PATH!" -DistortedFilePathBase "!OUT_PATH_WITHOUT_EXTENSION!!OUT_EXTENSION!" -SourceFilePath "!IN_PATH!" -SaveSsimu2Json -SaveReportJson
+start "Encoding Quality Report" /MIN pwsh -NoProfile -ExecutionPolicy Bypass -File "!PS_PATH!" -DistortedFilePathBase "!OUT_PATH_WITHOUT_EXTENSION!!OUT_EXTENSION!" -SourceFilePath "!IN_PATH!" -SaveSsimu2Json:$false -SaveReportJson:$false
 echo [INFO] Invoked Encoding Quality Report script...
 
 endlocal
