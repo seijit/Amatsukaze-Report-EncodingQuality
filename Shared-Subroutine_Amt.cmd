@@ -16,17 +16,17 @@ goto :EOF
 :SETUP_VARS_OF_AMT
   :: OUT_EXTENSION に出力ファイルの拡張子をセット 
   :: OUT_PATH_WITHOUT_EXTENSION に拡張子抜きの出力ファイルのパスをセット 
+  :: REFERENCE_PATH にリファレンスファイルのパスをセット 
   :: 既存の変数は変更しない 
 
-  if "%ITEM_MODE%"==""  echo [ERROR] Amatsukaze batch is not running. & exit /B 1
-  if "%ITEM_MODE%"=="DrcsCheck"  exit /B 1
-  if "%ITEM_MODE%"=="CMCheck"  exit /B 1
   if "%IN_PATH%"==""  echo [ERROR] IN_PATH variable missing. & exit /B 1
   if "%OUT_PATH%"==""  echo [ERROR] OUT_PATH variable missing. & exit /B 1
 
+  set "REFERENCE_SUFFIX=.lossless"
   if defined OUT_EXT if exist "%OUT_PATH%%OUT_EXT%" (
     call set "OUT_EXTENSION=%%OUT_EXT%%"
     call set "OUT_PATH_WITHOUT_EXTENSION=%%OUT_PATH%%"
+    call set "REFERENCE_PATH=%%IN_DIR%%\%%IN_FILENAME%%%%REFERENCE_SUFFIX%%%%OUT_EXTENSION%%"
     exit /B 0
   )
   for %%e in (%OUT_EXTENSIONS%) do (
@@ -34,11 +34,38 @@ goto :EOF
       if "%OUT_PATH%%%e"=="%IN_PATH%"  exit /B 1
       call set "OUT_EXTENSION=%%%e"
       call set "OUT_PATH_WITHOUT_EXTENSION=%%OUT_PATH%%"
+      call set "REFERENCE_PATH=%%IN_DIR%%\%%IN_FILENAME%%%%REFERENCE_SUFFIX%%%%OUT_EXTENSION%%"
       exit /B 0
     )
   )
+  if exist "%OUT_PATH_WITHOUT_EXTENSION%%OUT_EXTENSION%" (
+    exit /B 0
+  )
+
   echo [ERROR] Output file not found.
   exit /B 1
+
+:DEBUG_PRINT
+  setlocal EnableDelayedExpansion
+
+  echo([DEBUG] OUT_PATH: !OUT_PATH!
+  echo([DEBUG] OUT_PATH_WITHOUT_EXTENSION: !OUT_PATH_WITHOUT_EXTENSION!
+  echo([DEBUG] OUT_EXT: !OUT_EXT!
+  echo([DEBUG] OUT_EXTENSION: !OUT_EXTENSION!
+  echo([DEBUG] IN_PATH: !IN_PATH!
+  echo([DEBUG] REFERENCE_PATH: !REFERENCE_PATH!
+  echo([DEBUG] PS_PATH: !PS_PATH!
+
+  endlocal & exit /B 0
+
+:VALIDATE_ITEM_MODE
+  setlocal EnableDelayedExpansion
+
+  if "%ITEM_MODE%"==""  echo [ERROR] Amatsukaze batch is not running. & exit /B 1
+  if "%ITEM_MODE%"=="DrcsCheck"  echo [ERROR] Drcs Check mode is running. & exit /B 1
+  if "%ITEM_MODE%"=="CMCheck"  echo [ERROR] CM Check mode is running. & exit /B 1
+
+  endlocal & exit /B 0
 
 :get_powershell_script_path
   :: 例: 実行後_Report-EncodingQuality.cmd -> Report-EncodingQuality.ps1 
