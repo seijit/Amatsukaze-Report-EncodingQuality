@@ -235,20 +235,28 @@ class AmatsukazeLogInfo {
       $EncodingSJIS = [System.Text.Encoding]::GetEncoding(932)
       $LogLines = [System.IO.File]::ReadAllLines($LogFilePath, $EncodingSJIS)
 
+      [int]$MaxFrames = 0
+      [bool]$IsCurrentMax = $false
+
       # ログの各行を正規表現で解析
       switch -Regex ($LogLines) {
         # エンコード結果行
         "encoded (\d+) frames, ([\d\.]+) fps, ([\d\.]+) kbps" {
-          # 最初に出現した値のみを採用（メインパート）
-          if ($Metadata.FPS -eq "-") {
+          # 最もフレーム数の多いパート（本編）を採用する
+          $Frames = [int]$Matches[1]
+          if ($Frames -gt $MaxFrames) {
+            $MaxFrames = $Frames
             $Metadata.FPS = $Matches[2]
             $Metadata.Bitrate = $Matches[3]
+            $IsCurrentMax = $true
+          } else {
+            $IsCurrentMax = $false
           }
         }
         # 所要時間
         "encode time (\d+:\d+:\d+)" {
-          # 最初に出現した値のみを採用（メインパート）
-          if ($Metadata.EncodingTime -eq "-") {
+          # 最もフレーム数の多いパートとセットの時間を採用
+          if ($IsCurrentMax) {
             $Metadata.EncodingTime = $Matches[1]
           }
         }
